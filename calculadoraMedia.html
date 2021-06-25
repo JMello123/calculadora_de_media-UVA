@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calculadora de média UVA</title>
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+    <style>
+        body{
+            background-color: #014b78;
+            text-align: center;
+        }
+        header{
+            font-family: arial;
+            color: #8dd5bf;
+        }
+        section{
+            color:white;
+            font-family: arial;
+        }
+        button#btn{
+            background: #8dd5bf; 
+            border: 0; 
+            border-radius: 3px;
+            padding: 10px ;
+            color:white; 
+            margin: 10px;
+        }
+    </style> 
+</head>
+
+<body>
+    <header>
+        <h1>Calculadora de média UVA</h1>
+    </header>
+
+    <section>
+        <div>
+            <p>Insira a sua nota do 1º trabalho (de 0 a 10): 
+                <input style="border-radius: 5px;" type="number" name="AVA1" id="AVA1" min="0" max="10">
+            </p>
+            <p>Insira a sua nota do 2º trabalho (de 0 a 10): 
+                <input style="border-radius: 5px;" type="number" id="AVA2" min="0" max="10">
+            </p>
+            <p>Insira a sua nota da PROVA presencial(de 0 a 10): 
+                <input style="border-radius: 5px;" type="number" id="AV2" min="0" max="10">
+            </p>        
+            <button id="btn" onclick= "calcular()">Calcular</button>          
+        </div>
+
+        <div id="resultado">
+            <p>Preencha com as notas para ver o resultado</p>
+        </div>
+
+        <div>
+            <p id="div-pergunta" style="display: none;">Caso tenha feito, insira a sua nota da AV3 (de 0 a 100):     
+                <input style='border-radius: 5px;'' type='number' name='AV3' id='AV3' min='0' max='100'>
+                <button id="btn" onclick= 'recalcular()'>Recalcular</button>
+            </p>
+        </div>
+    </section>
+
+    <footer style="color:#8dd5bf; margin-top: 30px;">
+        <address>Desenvolvido por Juan Mello</address>
+    </footer> 
+
+    <script>
+        function calcular(){
+            let elemava1 = document.getElementById('AVA1')
+            let elemava2 = document.getElementById('AVA2')
+            let elemav2 = document.getElementById('AV2')
+            let ava1 = Number(elemava1.value)
+            let ava2 = Number(elemava2.value)
+            let av2 = Number(elemav2.value)
+            let av1 = (ava1 + ava2) /2
+            let mediafinal = 0
+            let elemresultado = document.getElementById('resultado')
+
+            if (ava1>10 || ava2>10 || av2>10 || elemava1.value.length == 0|| elemava2.value.length==0 || elemav2.value.length== 0){
+                window.alert("Os valores não foram preenchido corretamente. Por favor digite uma nota entre 0 a 10")
+            }
+
+            else if (av1 == 0){
+                mediafinal = (av1*0.4 + av2*0.6)/2
+                elemresultado.innerHTML = `Você está <strong style="color:red;">REPROVADO</strong>. Sua nota é: ${mediafinal}`
+            }
+            
+            else if (av2 < 5){
+                mediafinal = (av1*0.4 + av2*0.6)
+                document.getElementById('div-pergunta').style.display = 'block'  //faz mostrar a div da pergunta sobre AV3              
+                elemresultado.innerHTML = `Por enquanto você está abaixo da média e <strong style="color:yellow">DEVE</strong> fazer a AV3. Sua nota final é: ${mediafinal}`
+            }
+            
+            else {
+                mediafinal = (av1*0.4 + av2*0.6)
+                if (mediafinal >= 6){
+                    elemresultado.innerHTML = `Você está <strong style="color:green;">APROVADO</strong>. Sua nota é: ${mediafinal}`
+                }
+                else{
+                    document.getElementById('div-pergunta').style.display = 'block'                
+                    elemresultado.innerHTML = `Por enquanto você está abaixo da média e <strong style="color:yellow">DEVE</strong> fazer a AV3. Sua nota final é: ${mediafinal}`
+                }
+            }
+        }
+        function recalcular(){
+            let elemava1 = document.getElementById('AVA1')
+            let elemava2 = document.getElementById('AVA2')
+            let elemav2 = document.getElementById('AV2')
+            let elemav3 = document.getElementById('AV3')
+            let ava1 = Number(elemava1.value)
+            let ava2 = Number(elemava2.value)
+            let av2 = Number(elemav2.value)
+            let av3 = Number(elemav3.value)
+
+            let av1 = (ava1 + ava2)/2
+            let mediafinal = 0
+            let elemresultado = document.getElementById('resultado')
+
+            if (av3>10 || elemav3.value.length == 0){
+                window.alert("Os valores não foram preenchido corretamente. Por favor digite uma nota entre 0 a 10")
+            }
+
+            else if (av3 < 5){
+                mediafinal = (av1*0.4 + av3*0.6)/2
+                elemresultado.innerHTML = `Você está <strong style="color:red;">REPROVADO</strong>. Sua nota é: ${mediafinal}`
+            }
+            else{
+                mediafinal = (av1*0.4 + av3*0.6)
+                if(mediafinal >= 6){
+                    elemresultado.innerHTML = `Você está <strong style="color:green;">APROVADO</strong>. Sua nota é: ${mediafinal}`
+                }
+                else{
+                    elemresultado.innerHTML = `Você está <strong style="color:red;">REPROVADO</strong>. Sua nota é: ${mediafinal}`
+                }
+            }  
+        }
+    </script>
+</body>
+</html>
